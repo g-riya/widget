@@ -1,14 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
+import Colors from './components/Colors';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -19,16 +11,9 @@ import {
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 const Section: React.FC<{
-  title: string;
+  title: String;
+  children?: React.ReactNode;
 }> = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -59,7 +44,7 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? Colors.dark : Colors.lighter,
   };
 
   return (
@@ -68,30 +53,36 @@ const App = () => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
+          <Section title="Number of Applications">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
           </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
+          <Section title="Accuracy">
+            should import
           </Section>
-          <Section title="Debug">
-            <DebugInstructions />
+          <Section title="Alerts">
+            Should be a list of issues
           </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
+          <Section title="Trend">
+            Graph
           </Section>
-          <LearnMoreLinks />
+          <Section title="Number of Decisions">
+            Should import
+            
+          </Section>
+          <Text />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+
+
 
 const styles = StyleSheet.create({
   sectionContainer: {
