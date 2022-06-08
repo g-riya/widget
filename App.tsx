@@ -1,106 +1,46 @@
-import React from 'react';
-import Colors from './components/Colors';
-
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-const Section: React.FC<{
-  title: String;
-  children?: React.ReactNode;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
+import React, {useState} from 'react';
+import {View, TextInput, StyleSheet, NativeModules} from 'react-native';
+import SharedGroupPreferences from 'react-native-shared-group-preferences';
+const group = 'group.asap';
+const SharedStorage = NativeModules.SharedStorage;
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.dark : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Number of Applications">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="Accuracy">
-            should import
-          </Section>
-          <Section title="Alerts">
-            Should be a list of issues
-          </Section>
-          <Section title="Trend">
-            Graph
-          </Section>
-          <Section title="Number of Decisions">
-            Should import
-            
-          </Section>
-          <Text />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+const [text, setText] = useState('');
+const widgetData = {
+    text,
 };
-
-
-
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
+const handleSubmit = async () => {
+try {
+// iOS
+await SharedGroupPreferences.setItem('widgetKey', widgetData, group);
+} catch (error) {
+console.log({error});
+}
+// Android
+SharedStorage.set(JSON.stringify({text}));
+};
+return (
+<View style={styles.container}>
+<TextInput
+style={styles.input}
+onChangeText={newText => setText(newText)}
+value={text}
+returnKeyType="send"
+onEndEditing={handleSubmit}
+placeholder="Enter the text to display..."
+/>
+</View>
+);
+};
 export default App;
+const styles = StyleSheet.create({
+container: {
+marginTop: '50%',
+paddingHorizontal: 24,
+},
+input: {
+width: '100%',
+borderBottomWidth: 1,
+fontSize: 20,
+minHeight: 40,
+},
+});

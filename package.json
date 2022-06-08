@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "17.0.2",
     "react-native": "0.68.2",
+    "react-native-shared-group-preferences": "^1.1.23",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1"
